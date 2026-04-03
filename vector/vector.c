@@ -69,6 +69,12 @@ void push(vector *v, Item item) {
     v->items[v->size++] = item;
 }
 
+void clear(vector *v) {
+    while (size(v) > 0) {
+        pop(v);
+    }
+}
+
 Item pop(vector *v) {
     if (v->size == 0) fatal_error("Can't pop from empty vector");
     return v->items[--v->size];

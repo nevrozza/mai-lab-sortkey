@@ -11,4 +11,6 @@ add_executable(sortKey main.c
         solution/solution.c
         solution/solution.h
         vector/item.c
-        vector/item.h)
+        vector/item.h
+        solution/cli.c
+        solution/cli.h)

@@ -20,6 +20,8 @@ void set(vector *v, int index, Item item);
 
 void push(vector *v, Item item);
 
+void clear(vector *v);
+
 Item pop(vector *v);
 
 #endif //VECTOR_H
