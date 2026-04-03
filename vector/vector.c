@@ -7,12 +7,12 @@
 struct vector {
     int size;
     int capacity;
-    Item **items;
+    Item *items;
 };
 
 vector *init() {
     vector *v = malloc(sizeof(vector));
-    Item **items = malloc(INITIAL_CAPACITY * sizeof(Item *));
+    Item *items = malloc(INITIAL_CAPACITY * sizeof(Item));
     if (v == nullptr || items == nullptr) {
         memory_error();
         return nullptr; // suppress IDE
@@ -25,9 +25,6 @@ vector *init() {
 
 void destroy(vector *v) {
     if (!v || !v->items) return;
-    for (int i = 0; i < v->size; i++) {
-        free(v->items[i]);
-    }
     free(v->items);
     free(v);
 }
@@ -40,7 +37,7 @@ void resize(vector *v, const int new_capacity) {
     if (new_capacity < v->capacity) {
         return;
     }
-    Item **new_items = realloc(v->items, new_capacity * sizeof(Item *));
+    Item *new_items = realloc(v->items, new_capacity * sizeof(Item));
     if (new_items == nullptr) {
         memory_error();
         return;
@@ -50,22 +47,29 @@ void resize(vector *v, const int new_capacity) {
 }
 
 Item *get(const vector *v, const int index) {
-    if (index < 0 || index >= v->size) return nullptr;
-    return v->items[index];
+    if (index < 0 || index >= v->size) fatal_error("Index out of range");
+    return &v->items[index];
 }
 
-void set(vector *v, const int index, Item *client) {
-    v->items[index] = client;
+void *get_raw_array(const vector *v) {
+    if (v == NULL) {
+        return NULL;
+    }
+    return v->items;
 }
 
-void push(vector *v, Item *client) {
+void set(vector *v, const int index, Item item) {
+    v->items[index] = item;
+}
+
+void push(vector *v, Item item) {
     if (v->size >= v->capacity) {
         resize(v, v->capacity * 2);
     }
-    v->items[v->size++] = client;
+    v->items[v->size++] = item;
 }
 
-Item *pop(vector *v) {
-    if (v->size == 0) return nullptr;
+Item pop(vector *v) {
+    if (v->size == 0) fatal_error("Can't pop from empty vector");
     return v->items[--v->size];
 }

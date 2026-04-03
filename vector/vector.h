@@ -1,12 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
-
-#define MAX_STR 100
-
-typedef struct {
-    double key;
-    char value[MAX_STR];
-} Item;
+#include "item.h"
 
 typedef struct vector vector;
 
@@ -20,10 +14,12 @@ void resize(vector *v, int new_capacity);
 
 Item *get(const vector *v, int index);
 
-void set(vector *v, int index, Item *client);
+void *get_raw_array(const vector *v);
 
-void push(vector *v, Item *client);
+void set(vector *v, int index, Item item);
 
-Item *pop(vector *v);
+void push(vector *v, Item item);
+
+Item pop(vector *v);
 
 #endif //VECTOR_H
