@@ -5,7 +5,7 @@
 
 
 void shell_sort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) {
-    char *temp = malloc(size);
+    void *temp = malloc(size);
 
     for (size_t gap = nmemb / 2; gap > 0; gap /= 2) {
         for (size_t i = gap; i < nmemb; i++) {
